@@ -343,6 +343,9 @@
 			curl_setopt($ch, CURLOPT_USERAGENT, SELF_USER_AGENT);
 			curl_setopt($ch, CURLOPT_ENCODING, "");
 			curl_setopt($ch, CURLOPT_REFERER, $url);
+                if((OPENSSL_VERSION_NUMBER >= 0x0090808f) && (OPENSSL_VERSION_NUMBER < 0x10000000)) {
+                           curl_setopt($ch, CURLOPT_SSLVERSION,3);
+                        }
 
 			if ($post_query) {
 				curl_setopt($ch, CURLOPT_POST, true);
@@ -4152,10 +4155,6 @@
 		//curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true); //CURLOPT_FOLLOWLOCATION Disabled...
 		curl_setopt($curl, CURLOPT_TIMEOUT, 60);
 		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-
-		if ((OPENSSL_VERSION_NUMBER >= 0x0090808f) && (OPENSSL_VERSION_NUMBER < 0x10000000)) {
-			curl_setopt($curl, CURLOPT_SSLVERSION, 3);
-		}
 
 		$html = curl_exec($curl);
 
